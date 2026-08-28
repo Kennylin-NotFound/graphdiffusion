@@ -1,0 +1,57 @@
+experiment:
+  schema_version: "1.0"
+  name: phase6c-acceptance
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+    - validation
+  seed: 20260622
+  device: cuda
+  deterministic: false
+  output_root: artifacts/phase6c-acceptance
+  timing_scope:
+    - sampling_seconds
+    - verification_seconds
+    - repair_seconds
+    - fallback_seconds
+    - exact_evaluation_seconds
+    - selection_seconds
+    - total_seconds
+  methods:
+    - method_id: learned_hybrid
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: learned-main
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        reverse_steps: 25
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: random_hybrid
+      kind: random_hybrid
+      proposal_group: random-main
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: fallback_only
+      kind: fallback_only
+      inference:
+        fallback_max_search_nodes: 100000
+  claims:
+    - claim_id: acceptance_quality_beyond_fallback
+      question: Does the final-data learned hybrid improve validation quality beyond fallback?
+      hypothesis: Learned proposals reduce the exact latency gap while preserving feasibility.
+      comparison:
+        - learned_hybrid
+        - fallback_only
+      primary_metric: gap_to_pool_best
+    - claim_id: acceptance_proposal_value
+      question: Are learned validation proposals more feasible than random compatible proposals?
+      hypothesis: Learned proposals have a higher raw feasible rate than random proposals.
+      comparison:
+        - learned_hybrid
+        - random_hybrid
+      primary_metric: raw_feasible_rate

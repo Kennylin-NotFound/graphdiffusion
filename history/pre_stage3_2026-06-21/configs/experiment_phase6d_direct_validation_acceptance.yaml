@@ -1,0 +1,60 @@
+experiment:
+  schema_version: "1.0"
+  name: phase6d-direct-validation-acceptance
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+    - validation
+  seed: 20260627
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6d-direct-validation-acceptance
+  methods:
+    - method_id: diffusion_hybrid
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: paired-learning-proposals
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        reverse_steps: 25
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: direct_hybrid
+      kind: direct_hybrid
+      checkpoint: artifacts/runs/20260615T122027Z-phase6d-direct-final-seed20260622/best_checkpoint.pt
+      proposal_group: paired-learning-proposals
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: random_hybrid
+      kind: random_hybrid
+      proposal_group: paired-learning-proposals
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: fallback_only
+      kind: fallback_only
+      inference:
+        fallback_max_search_nodes: 100000
+  claims:
+    - claim_id: validation_diffusion_isolation
+      question: Does diffusion improve constrained validation quality over one-pass prediction?
+      hypothesis: Diffusion provides better verified latency than the direct predictor under a matched downstream pipeline.
+      comparison:
+        - diffusion_hybrid
+        - direct_hybrid
+      primary_metric: gap_to_pool_best
+    - claim_id: validation_learning_value
+      question: Do learned proposals improve over random proposals and fallback?
+      hypothesis: Learned proposal generators improve verified latency under the shared hard pipeline.
+      comparison:
+        - diffusion_hybrid
+        - direct_hybrid
+        - random_hybrid
+        - fallback_only
+      primary_metric: gap_to_pool_best

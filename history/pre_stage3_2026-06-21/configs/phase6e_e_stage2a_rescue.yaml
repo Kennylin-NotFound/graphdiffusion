@@ -1,0 +1,36 @@
+stage2a:
+  schema_version: "1.0"
+  name: phase6e-e-stage2a-trajectory-rescue
+  seeds: [20260622, 20260623, 20260624]
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partition: validation
+  final_partition: test_id
+  instance_limit: 64
+  calibration_count: 32
+  diffusion_checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  direct_checkpoint_freeze: artifacts/phase6d-direct-five-seed/checkpoint_freeze.json
+  output_root: artifacts/phase6e-e-stage2a
+  lock_path: artifacts/phase6e-e-stage2a/stage2a_lock.json
+  diffusion:
+    num_samples: 4
+    sample_batch_size: 4
+    reverse_steps: 25
+  direct:
+    num_samples: 96
+    sample_batch_size: 4
+  anchor_sets:
+    final_only: []
+    early_late: [0, 24]
+    three_anchor: [0, 12, 24]
+    all_five: [0, 6, 12, 18, 24]
+  repair_candidate_limits: [4, 8, 12]
+  postprocessing:
+    repair_max_moves: 10
+    fallback_max_search_nodes: 100000
+  gate_r2:
+    minimum_gap_closure: 0.50
+    max_direct_time_ratio: 1.10
+    minimum_raw_any_gain: 0.05

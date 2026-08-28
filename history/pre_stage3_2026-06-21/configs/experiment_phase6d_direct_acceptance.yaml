@@ -1,0 +1,43 @@
+experiment:
+  schema_version: "1.0"
+  name: phase6d-direct-acceptance
+  dataset_root: artifacts/datasets/phase5b-pilot
+  dataset_freeze: dataset_freeze.json
+  partitions:
+    - validation
+  instance_limit: 2
+  seed: 20260627
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6d-direct-experiment-acceptance
+  methods:
+    - method_id: direct_hybrid
+      kind: direct_hybrid
+      checkpoint: artifacts/phase6d-direct-training-acceptance/20260615T121811Z-phase6d-direct-acceptance/best_checkpoint.pt
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: diffusion_hybrid
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T040516Z-phase5c-pilot/best_checkpoint.pt
+      inference:
+        num_samples: 4
+        sample_batch_size: 4
+        reverse_steps: 25
+        repair_max_moves: 10
+        fallback_max_search_nodes: 100000
+    - method_id: fallback_only
+      kind: fallback_only
+      inference:
+        fallback_max_search_nodes: 100000
+  claims:
+    - claim_id: direct_predictor_registry_contract
+      question: Does the no-diffusion predictor use the shared verified evaluation path?
+      hypothesis: Every accepted direct-predictor output passes the shared verifier.
+      comparison:
+        - direct_hybrid
+        - diffusion_hybrid
+        - fallback_only
+      primary_metric: success

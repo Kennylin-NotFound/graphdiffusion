@@ -1,0 +1,30 @@
+stage2b:
+  schema_version: "1.0"
+  name: phase6e-e-stage2b-sealed-final-id
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partition: test_id
+  forbidden_partitions: [train, validation]
+  stage2a_evidence: artifacts/phase6e-e-stage2a/stage2a_evidence.json
+  phase6ed_final_evidence: artifacts/phase6e-d-time-matched/final_evidence_freeze.json
+  diffusion_checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  direct_checkpoint_freeze: artifacts/phase6d-direct-five-seed/checkpoint_freeze.json
+  output_root: artifacts/phase6e-e-stage2b
+  lock_path: artifacts/phase6e-e-stage2b/stage2b_lock.json
+  selected_variant: rescue_all_five_b12
+  proposal_seed_namespaces:
+    diffusion: phase6ed-diffusion
+    direct: phase6ed-direct-prefix
+  diffusion:
+    num_samples: 4
+    sample_batch_size: 4
+    reverse_steps: 25
+  direct:
+    num_samples: 96
+    sample_batch_size: 4
+  postprocessing:
+    repair_max_moves: 10
+    fallback_max_search_nodes: 100000

@@ -1,0 +1,37 @@
+training:
+  run_name: phase5c-pilot
+  dataset_root: artifacts/datasets/phase5b-pilot
+  train_partitions: [train]
+  validation_partitions: [validation]
+  seed: 20260615
+  device: cuda
+  batch_size: 16
+  steps: 1000
+  log_interval: 10
+  denoising_validation_interval: 50
+  constrained_validation_interval: 250
+  checkpoint_interval: 100
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  target_sampling: energy
+  capacity_weight: 0.1
+  link_weight: 0.1
+
+diffusion:
+  steps: 100
+  beta_start: 0.0001
+  beta_end: 0.2
+
+model:
+  hidden_dim: 128
+  layers: 4
+  dropout: 0.0
+
+constrained_validation:
+  num_samples: 4
+  sample_batch_size: 4
+  reverse_steps: 25
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  instance_limit: 8

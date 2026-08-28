@@ -1,0 +1,7 @@
+campaign:
+  name: phase6d-direct-five-seed-final
+  base_training_config: configs/training_phase6d_direct_final.yaml
+  dataset_root: artifacts/datasets/phase6c-final-main
+  expected_steps: 1500
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  output_root: artifacts/phase6d-direct-five-seed

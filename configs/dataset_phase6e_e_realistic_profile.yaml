@@ -1,0 +1,69 @@
+dataset:
+  name: phase6e-e-realistic-profile
+  base_seed: 2026070901
+  output: artifacts/datasets/phase6e-e-realistic-profile
+
+  contract:
+    family: realistic_profile
+    expected_instance_count: 192
+    base_partition: profile_id
+    realistic_profiles:
+      profile_id: [video_profile_parameters]
+      profile_branched: [branched_video_workflow]
+      profile_high_sharing: [shared_upstream_workflow]
+    labeling:
+      target_size: 16
+      beta: 5.0
+      total_time_limit_seconds: 120.0
+      mip_gap: 0.0
+      threads: 1
+      seed: 0
+
+  partitions:
+    profile_id:
+      role: test
+      regime: realistic_profile
+      size_profile: realistic_profile_id
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 600
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.15, 0.35]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    profile_branched:
+      role: test
+      regime: realistic_profile_branched
+      size_profile: realistic_profile_branched
+      count: 64
+      service_count_range: [10, 22]
+      max_generation_attempts: 800
+      num_applications: [2, 5]
+      num_devices: [6, 10]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.15, 0.35]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 5]
+
+    profile_high_sharing:
+      role: test
+      regime: realistic_profile_high_sharing
+      size_profile: realistic_profile_high_sharing
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 600
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.75, 0.95]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.15, 0.35]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]

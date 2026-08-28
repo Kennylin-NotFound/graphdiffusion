@@ -1,0 +1,18 @@
+project:
+  name: gdm-factor-diffusion
+  schema_version: "1.1"
+
+paths:
+  artifacts: artifacts
+  datasets: artifacts/datasets
+  runs: artifacts/runs
+
+runtime:
+  seed: 20260611
+  deterministic: false
+  device: cuda
+
+data:
+  input_available_at_all_devices: true
+  processing_contention_modeled: false
+  multi_hop_forwarding: false

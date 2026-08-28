@@ -1,0 +1,37 @@
+experiment:
+  schema_version: "1.0"
+  name: phase6d-baseline-acceptance
+  dataset_root: artifacts/datasets/phase5b-pilot
+  dataset_freeze: dataset_freeze.json
+  partitions:
+    - test_id
+  instance_limit: 2
+  seed: 20260615
+  device: cpu
+  deterministic: true
+  output_root: artifacts/phase6d-baseline-acceptance
+  timing_scope:
+    - optimization_seconds
+    - verification_seconds
+    - exact_evaluation_seconds
+    - fallback_seconds
+    - total_seconds
+  methods:
+    - method_id: milp_2s
+      kind: milp_time_limit
+      time_limit_seconds: 2.0
+    - method_id: greedy_local
+      kind: greedy_local
+    - method_id: fallback_only
+      kind: fallback_only
+      inference:
+        fallback_max_search_nodes: 100000
+  claims:
+    - claim_id: optimization_baseline_contract
+      question: Do the optimization baselines return auditable feasible incumbents?
+      hypothesis: Every successful baseline output passes the shared verifier.
+      comparison:
+        - milp_2s
+        - greedy_local
+        - fallback_only
+      primary_metric: success

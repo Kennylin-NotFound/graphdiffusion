@@ -1,0 +1,14 @@
+evaluation:
+  dataset_root: artifacts/datasets/phase1b-smoke
+  partitions: [validation]
+  checkpoint: artifacts/runs/20260612T065049Z-phase4a-smoke/best_checkpoint.pt
+  seed: 20260612
+  device: cuda
+
+inference:
+  num_samples: 8
+  sample_batch_size: 4
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  enable_repair: true
+  enable_fallback: true

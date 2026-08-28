@@ -1,0 +1,34 @@
+dataset:
+  name: phase6e-e-stage38-sealed
+  base_seed: 2026070601
+  output: artifacts/datasets/phase6e-e-stage38-sealed
+
+  contract:
+    family: stage38_sealed_confirmation
+    expected_instance_count: 128
+    partition_counts:
+      sealed_test_id: 128
+    labeling:
+      target_size: 16
+      beta: 5.0
+      total_time_limit_seconds: 120.0
+      mip_gap: 0.0
+      threads: 1
+      seed: 0
+
+  partitions:
+    sealed_test_id:
+      role: test
+      regime: in_distribution
+      size_profile: stage3_seen_medium
+      count: 128
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]

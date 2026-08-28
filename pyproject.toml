@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=82", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gdm-factor-diffusion"
+version = "0.1.0"
+description = "Typed factor-graph categorical diffusion for microservice deployment"
+requires-python = ">=3.11,<3.12"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore::pyparsing.warnings.PyparsingDeprecationWarning",
+]

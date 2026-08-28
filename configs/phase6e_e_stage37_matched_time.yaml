@@ -1,0 +1,51 @@
+evaluation:
+  schema_version: "1.0"
+  name: phase6e-e-stage37-matched-time
+  seed: 2026070511
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  partition: checkpoint_selection
+  direct_checkpoint: artifacts/phase6e-e-stage3-training/direct-seed2026070111/best.pt
+  masked_checkpoint: artifacts/phase6e-e-stage3-training/masked_conditional-seed2026070111/best.pt
+  training_freeze: artifacts/phase6e-e-stage3-training/training_freeze.json
+  consumed_pilot_evidence: artifacts/phase6e-e-stage3-pilot/pilot_evidence.json
+  stage36_evidence: artifacts/phase6e-e-stage36-calibration/efficiency_evidence.json
+  forbidden_final_root: artifacts/datasets/phase6e-e-stage3-final
+
+optimization_preflight:
+  instance_count: 8
+  diffusion_samples: 8
+  minimum_sampling_speedup: 0.02
+  require_exact_deterministic_replay: true
+  require_complete_vectorized_proposals: true
+
+calibration:
+  direct_proposal_grid: [32, 48, 64, 80, 96]
+  direct_sample_batch_size: 8
+  deterministic_samples: 1
+  diffusion_samples: 8
+  masked_sample_batch_size: 8
+  temperature: 1.0
+
+postprocessing:
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  always_include_fallback: true
+
+matched_time_gate:
+  minimum_time_ratio: 0.90
+  maximum_time_ratio: 1.10
+  minimum_relative_pre_fallback_gap_improvement: 0.10
+  require_more_paired_wins_than_losses: true
+  require_raw_feasibility_not_reduced: true
+  require_final_gap_not_worse: true
+  require_final_success_not_reduced: true
+
+output:
+  preparation_lock: artifacts/phase6e-e-stage37/preparation_lock.json
+  optimization_preflight: artifacts/phase6e-e-stage37/optimization_preflight.json
+  decoder_selection_lock: artifacts/phase6e-e-stage37/decoder_selection_lock.json
+  calibration_root: artifacts/phase6e-e-stage37-calibration
+  decision_lock: artifacts/phase6e-e-stage37/matched_time_decision_lock.json
+

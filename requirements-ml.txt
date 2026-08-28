@@ -1,0 +1,7 @@
+# Install PyTorch from its official CUDA wheel index before this file:
+#   python -m pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+#
+# PyG 2.8.0 supports a minimal PyTorch-only installation. Optional compiled
+# extensions are intentionally omitted until profiling shows that they are
+# needed by the factor-graph implementation.
+torch-geometric==2.8.0

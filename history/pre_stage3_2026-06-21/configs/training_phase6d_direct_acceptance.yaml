@@ -1,0 +1,41 @@
+training:
+  run_name: phase6d-direct-acceptance
+  model_kind: direct
+  dataset_root: artifacts/datasets/phase5b-pilot
+  require_dataset_freeze: true
+  train_partitions: [train]
+  validation_partitions: [validation]
+  seed: 20260627
+  device: cuda
+  batch_size: 8
+  steps: 12
+  log_interval: 1
+  denoising_validation_interval: 3
+  constrained_validation_interval: 6
+  checkpoint_interval: 3
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  target_sampling: energy
+  capacity_weight: 0.1
+  link_weight: 0.1
+
+diffusion:
+  # Retained only for checkpoint-format compatibility; direct training never
+  # noises a placement or evaluates a reverse transition.
+  steps: 100
+  beta_start: 0.0001
+  beta_end: 0.2
+
+model:
+  hidden_dim: 64
+  layers: 2
+  dropout: 0.0
+
+constrained_validation:
+  num_samples: 2
+  sample_batch_size: 2
+  reverse_steps: null
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  instance_limit: 2

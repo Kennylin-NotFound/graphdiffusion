@@ -1,0 +1,117 @@
+dataset:
+  name: phase1b-smoke
+  base_seed: 20260612
+  output: artifacts/datasets/phase1b-smoke
+
+  partitions:
+    train:
+      role: train
+      regime: in_distribution
+      size_profile: seen_small_medium
+      count: 4
+      num_applications: [2, 3]
+      num_devices: [4, 6]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    validation:
+      role: validation
+      regime: in_distribution
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: [2, 3]
+      num_devices: [4, 6]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_id:
+      role: test
+      regime: in_distribution
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: [2, 3]
+      num_devices: [4, 6]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_unseen_size:
+      role: test
+      regime: unseen_size
+      size_profile: unseen_large
+      count: 2
+      num_applications: [4, 5]
+      num_devices: [7, 9]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_sparse_topology:
+      role: test
+      regime: sparse_topology
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: [2, 3]
+      num_devices: [5, 7]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.10, 0.25]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_low_compatibility:
+      role: test
+      regime: low_compatibility
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: [2, 3]
+      num_devices: [5, 7]
+      share_probability: [0.35, 0.70]
+      compatibility_density: [0.10, 0.30]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 1
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_high_sharing:
+      role: test
+      regime: high_sharing
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: [2, 3]
+      num_devices: [4, 6]
+      share_probability: [0.85, 1.00]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_unseen_workflow:
+      role: test
+      regime: unseen_workflow
+      size_profile: seen_small_medium
+      count: 2
+      num_applications: 2
+      num_devices: [4, 6]
+      share_probability: [0.65, 0.85]
+      compatibility_density: [0.45, 0.80]
+      topology_density: [0.35, 0.75]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [5]

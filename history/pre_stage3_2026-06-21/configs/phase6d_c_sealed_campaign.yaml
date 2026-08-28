@@ -1,0 +1,36 @@
+campaign:
+  schema_version: "1.0"
+  name: phase6d-c-sealed-main-comparisons
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  optimization_seed: 20260615
+  device: cuda
+  deterministic: true
+  milp_time_limit_seconds: 2.0
+  proposal_count: 4
+  proposal_batch_size: 4
+  diffusion_reverse_steps: 25
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  diffusion_checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  direct_checkpoint_freeze: artifacts/phase6d-direct-five-seed/checkpoint_freeze.json
+  generated_manifest_root: configs/generated_phase6d_c
+  output_root: artifacts/phase6d-c-final
+  lock_path: artifacts/phase6d-c-final/campaign_lock.json
+  datasets:
+    main:
+      dataset_root: artifacts/datasets/phase6c-final-main
+      dataset_freeze: dataset_freeze.json
+      partitions:
+        - test_id
+        - test_unseen_size
+        - test_sparse_topology
+        - test_low_compatibility
+        - test_high_sharing
+        - test_unseen_workflow
+    scale:
+      dataset_root: artifacts/datasets/phase6c-final-scale
+      dataset_freeze: dataset_freeze.json
+      partitions:
+        - scale_medium
+        - scale_large
+        - scale_extra_large

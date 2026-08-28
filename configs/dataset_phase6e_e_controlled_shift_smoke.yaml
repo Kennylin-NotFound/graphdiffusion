@@ -1,0 +1,119 @@
+dataset:
+  name: phase6e-e-controlled-shift-smoke
+  base_seed: 2026070801
+  output: artifacts/datasets/phase6e-e-controlled-shift-smoke
+
+  contract:
+    family: final_main
+    expected_instance_count: 12
+    base_partition: base_train
+    controlled_shifts:
+      test_id_reference: []
+      shift_high_sharing: [share_probability]
+      shift_low_compatibility: [compatibility_density]
+      shift_tight_capacity: [capacity_slack]
+      shift_unseen_workflow: [application_type_pool]
+    labeling:
+      target_size: 2
+      beta: 5.0
+      total_time_limit_seconds: 20.0
+      mip_gap: 0.0
+      threads: 1
+      seed: 0
+
+  partitions:
+    base_train:
+      role: train
+      regime: in_distribution
+      size_profile: controlled_shift_reference_medium
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_id_reference:
+      role: test
+      regime: in_distribution
+      size_profile: controlled_shift_reference_medium
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    shift_high_sharing:
+      role: test
+      regime: controlled_shift
+      size_profile: controlled_shift_high_sharing
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.75, 0.95]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    shift_low_compatibility:
+      role: test
+      regime: controlled_shift
+      size_profile: controlled_shift_low_compatibility
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.20, 0.35]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    shift_tight_capacity:
+      role: test
+      regime: controlled_shift
+      size_profile: controlled_shift_tight_capacity
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.02, 0.12]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    shift_unseen_workflow:
+      role: test
+      regime: unseen_workflow
+      size_profile: controlled_shift_unseen_workflow
+      count: 2
+      service_count_range: [8, 18]
+      max_generation_attempts: 500
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [5]

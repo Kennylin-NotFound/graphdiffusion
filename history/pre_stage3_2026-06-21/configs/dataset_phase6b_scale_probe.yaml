@@ -1,0 +1,53 @@
+dataset:
+  name: phase6b-scale-probe
+  base_seed: 20260618
+  output: artifacts/datasets/phase6b-scale-probe
+
+  partitions:
+    seen_medium:
+      role: test
+      regime: scale_seen_medium
+      size_profile: scale_seen_medium
+      count: 8
+      service_count_range: [8, 24]
+      max_generation_attempts: 200
+      num_applications: [3, 6]
+      num_devices: [5, 10]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    large:
+      role: test
+      regime: scale_large
+      size_profile: scale_large
+      count: 4
+      service_count_range: [24, 36]
+      max_generation_attempts: 300
+      num_applications: [7, 10]
+      num_devices: [10, 15]
+      share_probability: [0.30, 0.65]
+      compatibility_density: [0.30, 0.65]
+      topology_density: [0.25, 0.60]
+      capacity_slack: [0.15, 0.45]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4, 5]
+
+    extra_large:
+      role: test
+      regime: scale_extra_large
+      size_profile: scale_extra_large
+      count: 2
+      service_count_range: [36, 48]
+      max_generation_attempts: 500
+      num_applications: [10, 15]
+      num_devices: [15, 20]
+      share_probability: [0.30, 0.60]
+      compatibility_density: [0.25, 0.55]
+      topology_density: [0.25, 0.55]
+      capacity_slack: [0.20, 0.50]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4, 5]

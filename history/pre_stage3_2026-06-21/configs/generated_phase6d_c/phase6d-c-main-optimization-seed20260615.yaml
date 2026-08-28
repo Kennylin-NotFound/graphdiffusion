@@ -1,0 +1,37 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6d-c-main-optimization-seed20260615
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - test_id
+  - test_unseen_size
+  - test_sparse_topology
+  - test_low_compatibility
+  - test_high_sharing
+  - test_unseen_workflow
+  seed: 20260615
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6d-c-final/main-optimization
+  methods:
+  - method_id: milp_2s
+    kind: milp_time_limit
+    time_limit_seconds: 2.0
+  - method_id: greedy_local
+    kind: greedy_local
+  - method_id: fallback_only
+    kind: fallback_only
+    inference:
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: optimization_baselines
+    question: How do deterministic optimization baselines compare under declared online
+      budgets?
+    hypothesis: The exact MILP provides strong incumbents while greedy may fail without
+      backtracking.
+    comparison:
+    - milp_2s
+    - greedy_local
+    - fallback_only
+    primary_metric: success

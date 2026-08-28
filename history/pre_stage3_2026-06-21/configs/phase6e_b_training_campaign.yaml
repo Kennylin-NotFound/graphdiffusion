@@ -1,0 +1,73 @@
+campaign:
+  schema_version: "1.0"
+  name: phase6e-b-retraining-ablation
+  base_training_config: configs/training_phase6c_final.yaml
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  anchor_checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  seeds: [20260622, 20260623, 20260624]
+  smoke_seed: 20260622
+  expected_steps: 1500
+  smoke_steps: 20
+  smoke_validation_instances: 4
+  device: cuda
+  generated_config_root: configs/generated_phase6e_b
+  smoke_output_root: artifacts/phase6e-b-training/smoke-runs
+  full_output_root: artifacts/phase6e-b-training/full-runs
+  smoke_index_path: artifacts/phase6e-b-training/smoke_run_index.json
+  full_index_path: artifacts/phase6e-b-training/full_run_index.json
+  variant_freeze_root: artifacts/phase6e-b-training/variant-freezes
+  training_evidence_path: artifacts/phase6e-b-training/training_evidence_freeze.json
+  generated_evaluation_root: configs/generated_phase6e_b_evaluation
+  evaluation_output_root: artifacts/phase6e-b-evaluation
+  evaluation_index_path: artifacts/phase6e-b-evaluation/run_index.json
+  evaluation_lock_path: artifacts/phase6e-b-evaluation/campaign_lock.json
+  final_evidence_path: artifacts/phase6e-b-evaluation/final_evidence_freeze.json
+  lock_path: artifacts/phase6e-b-training/campaign_lock.json
+  variants:
+    energy_full:
+      target_sampling: energy
+      capacity_weight: 0.1
+      link_weight: 0.1
+      priority: anchor
+      anchor: true
+    uniform_full:
+      target_sampling: uniform
+      capacity_weight: 0.1
+      link_weight: 0.1
+      priority: primary
+      anchor: false
+    energy_no_guidance:
+      target_sampling: energy
+      capacity_weight: 0.0
+      link_weight: 0.0
+      priority: primary
+      anchor: false
+    energy_no_capacity:
+      target_sampling: energy
+      capacity_weight: 0.0
+      link_weight: 0.1
+      priority: secondary
+      anchor: false
+    energy_no_link:
+      target_sampling: energy
+      capacity_weight: 0.1
+      link_weight: 0.0
+      priority: secondary
+      anchor: false
+    best_full:
+      target_sampling: best
+      capacity_weight: 0.1
+      link_weight: 0.1
+      priority: diagnostic
+      anchor: false
+  final_evaluation:
+    partitions: [test_id]
+    deterministic: true
+    proposal_group: phase6e-b-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000

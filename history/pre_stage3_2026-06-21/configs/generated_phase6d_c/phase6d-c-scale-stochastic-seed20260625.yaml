@@ -1,0 +1,64 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6d-c-scale-stochastic-seed20260625
+  dataset_root: artifacts/datasets/phase6c-final-scale
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - scale_medium
+  - scale_large
+  - scale_extra_large
+  seed: 20260625
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6d-c-final/scale-stochastic
+  methods:
+  - method_id: diffusion_hybrid
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T075529Z-phase6c-final-seed20260625/best_checkpoint.pt
+    proposal_group: paired-categorical-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+      reverse_steps: 25
+  - method_id: direct_hybrid
+    kind: direct_hybrid
+    checkpoint: artifacts/runs/20260615T124018Z-phase6d-direct-final-seed20260625/best_checkpoint.pt
+    proposal_group: paired-categorical-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: random_hybrid
+    kind: random_hybrid
+    proposal_group: paired-categorical-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: fallback_only
+    kind: fallback_only
+    inference:
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: diffusion_isolation
+    question: Does reverse diffusion improve over one-pass prediction?
+    hypothesis: Diffusion improves verified latency under matched graph, labels, proposal
+      count, and post-processing.
+    comparison:
+    - diffusion_hybrid
+    - direct_hybrid
+    primary_metric: gap_to_pool_best
+  - claim_id: learned_proposal_value
+    question: Do learned proposals improve over random proposals and fallback?
+    hypothesis: Learned proposals improve verified latency and raw feasibility under
+      the shared hard pipeline.
+    comparison:
+    - diffusion_hybrid
+    - direct_hybrid
+    - random_hybrid
+    - fallback_only
+    primary_metric: gap_to_pool_best

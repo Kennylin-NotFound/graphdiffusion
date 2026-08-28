@@ -1,0 +1,53 @@
+confirmation:
+  schema_version: "1.0"
+  name: phase6e-e-stage38-sealed-multiseed
+  device: cuda
+  deterministic: true
+  evaluation_seed: 2026070611
+
+  development_dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  reused_training_seed: 2026070111
+  training_seeds: [2026070111, 2026070112, 2026070113]
+  training_configs:
+    "2026070111": configs/training_phase6e_e_stage3_pilot.yaml
+    "2026070112": configs/training_phase6e_e_stage38_seed2026070112.yaml
+    "2026070113": configs/training_phase6e_e_stage38_seed2026070113.yaml
+  reused_training_freeze: artifacts/phase6e-e-stage3-training/training_freeze.json
+  new_training_root: artifacts/phase6e-e-stage38-training
+
+  authorization_lock: artifacts/phase6e-e-stage37/matched_time_decision_lock.json
+  sealed_dataset_config: configs/dataset_phase6e_e_stage38_sealed.yaml
+  sealed_dataset_root: artifacts/datasets/phase6e-e-stage38-sealed
+  sealed_partition: sealed_test_id
+  expected_instances: 128
+
+  methods:
+    direct_samples: 64
+    deterministic_masked_samples: 1
+    diffusion_samples: 8
+    sample_batch_size: 8
+    temperature: 1.0
+
+  postprocessing:
+    repair_max_moves: 10
+    fallback_max_search_nodes: 100000
+    always_include_fallback: true
+
+  acceptance:
+    minimum_time_ratio: 0.90
+    maximum_time_ratio: 1.10
+    minimum_aggregate_relative_pre_fallback_gap_improvement: 0.10
+    require_positive_pre_fallback_improvement_each_seed: true
+    require_pre_fallback_success_not_reduced: true
+    require_raw_feasibility_not_reduced: true
+    require_final_gap_not_worse: true
+    require_final_success_not_reduced: true
+    require_more_instance_wins_than_losses: true
+    maximum_instance_sign_test_pvalue: 0.05
+
+  output:
+    preparation_lock: artifacts/phase6e-e-stage38/preparation_lock.json
+    training_freeze: artifacts/phase6e-e-stage38-training/training_freeze.json
+    evaluation_root: artifacts/phase6e-e-stage38-sealed-evaluation
+    final_evidence: artifacts/phase6e-e-stage38-sealed-evaluation/final_evidence.json
+    decision_lock: artifacts/phase6e-e-stage38/final_decision_lock.json

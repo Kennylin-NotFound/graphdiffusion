@@ -1,0 +1,51 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6e-d-validation-extension-seed20260625
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - validation
+  seed: 20260625
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-d-time-matched/validation/extension
+  methods:
+  - method_id: diffusion_k4
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T075529Z-phase6c-final-seed20260625/best_checkpoint.pt
+    proposal_group: phase6ed-diffusion
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+      reverse_steps: 25
+  - method_id: direct_k80
+    kind: direct_hybrid
+    checkpoint: artifacts/runs/20260615T124018Z-phase6d-direct-final-seed20260625/best_checkpoint.pt
+    proposal_group: phase6ed-direct-prefix
+    inference:
+      num_samples: 80
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: direct_k96
+    kind: direct_hybrid
+    checkpoint: artifacts/runs/20260615T124018Z-phase6d-direct-final-seed20260625/best_checkpoint.pt
+    proposal_group: phase6ed-direct-prefix
+    inference:
+      num_samples: 96
+      sample_batch_size: 4
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: phase6ed_validation
+    question: Does iterative diffusion improve proposal coverage or verified latency
+      over direct prediction at matched budget?
+    hypothesis: Diffusion provides a favorable proposal-quality/runtime tradeoff after
+      controlling the direct proposal budget.
+    comparison:
+    - diffusion_k4
+    - direct_k80
+    - direct_k96
+    primary_metric: gap_to_pool_best

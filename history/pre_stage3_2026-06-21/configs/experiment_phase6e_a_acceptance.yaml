@@ -1,0 +1,48 @@
+experiment:
+  schema_version: "1.0"
+  name: phase6e-a-inference-acceptance
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions: [validation]
+  instance_limit: 2
+  seed: 20260622
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-a-acceptance
+  methods:
+    - method_id: raw_only
+      kind: learned_raw_only
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 4, sample_batch_size: 4, reverse_steps: 25, repair_max_moves: 10, fallback_max_search_nodes: 100000}
+    - method_id: repair_only
+      kind: learned_repair
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 4, sample_batch_size: 4, reverse_steps: 25, repair_max_moves: 10, fallback_max_search_nodes: 100000}
+    - method_id: full_hybrid
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 4, sample_batch_size: 4, reverse_steps: 25, repair_max_moves: 10, fallback_max_search_nodes: 100000}
+    - method_id: steps_10
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 4, sample_batch_size: 4, reverse_steps: 10, repair_max_moves: 10, fallback_max_search_nodes: 100000}
+    - method_id: proposals_8
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 8, sample_batch_size: 4, reverse_steps: 25, repair_max_moves: 10, fallback_max_search_nodes: 100000}
+    - method_id: repair_0
+      kind: learned_hybrid
+      checkpoint: artifacts/runs/20260615T070248Z-phase6c-final-acceptance/best_checkpoint.pt
+      proposal_group: phase6e-a-acceptance-paired
+      inference: {num_samples: 4, sample_batch_size: 4, reverse_steps: 25, repair_max_moves: 0, fallback_max_search_nodes: 100000}
+  claims:
+    - claim_id: phase6e_a_acceptance
+      question: Do inference-only variants execute under the shared evaluator?
+      hypothesis: All registered variants preserve the common evidence contract.
+      comparison: [raw_only, repair_only, full_hybrid, steps_10, proposals_8, repair_0]
+      primary_metric: success

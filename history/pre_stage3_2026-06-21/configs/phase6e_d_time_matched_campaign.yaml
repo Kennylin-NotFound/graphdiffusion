@@ -1,0 +1,32 @@
+campaign:
+  schema_version: "1.0"
+  name: phase6e-d-time-matched-diffusion-direct
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  validation_partition: validation
+  final_partition: test_id
+  diffusion_checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  direct_checkpoint_freeze: artifacts/phase6d-direct-five-seed/checkpoint_freeze.json
+  generated_manifest_root: configs/generated_phase6e_d
+  output_root: artifacts/phase6e-d-time-matched
+  validation_lock_path: artifacts/phase6e-d-time-matched/validation_lock.json
+  budget_freeze_path: artifacts/phase6e-d-time-matched/budget_freeze.json
+  final_lock_path: artifacts/phase6e-d-time-matched/final_lock.json
+  validation_grids:
+    initial: [4, 8, 16, 32, 64]
+    extension: [80, 96]
+  time_match_ratio: 0.90
+  diffusion:
+    num_samples: 4
+    sample_batch_size: 4
+    reverse_steps: 25
+  shared_postprocessing:
+    repair_max_moves: 10
+    fallback_max_search_nodes: 100000
+  direct_sample_batch_size: 4
+  proposal_groups:
+    diffusion: phase6ed-diffusion
+    direct: phase6ed-direct-prefix

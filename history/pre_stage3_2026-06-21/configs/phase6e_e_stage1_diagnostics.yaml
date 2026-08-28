@@ -1,0 +1,23 @@
+diagnostic:
+  schema_version: "1.0"
+  name: phase6e-e-stage1-trajectory-diagnostics
+  seeds: [20260622, 20260623, 20260624]
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partition: validation
+  final_partition: test_id
+  instance_limit: 64
+  checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  num_samples: 4
+  reverse_steps: 25
+  anchor_count: 5
+  output_root: artifacts/phase6e-e-stage1
+  lock_path: artifacts/phase6e-e-stage1/stage1_lock.json
+  thresholds:
+    state_argmax_change_min: 0.05
+    neighbor_response_ratio_min: 1.20
+    reservoir_raw_any_gain_min: 0.05
+    reservoir_gap_reduction_min: 0.10
+

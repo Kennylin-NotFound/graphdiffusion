@@ -1,0 +1,25 @@
+campaign:
+  schema_version: "1.0"
+  name: phase6e-a-inference-ablation
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  device: cuda
+  deterministic: true
+  checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions: [test_id]
+  generated_manifest_root: configs/generated_phase6e_a
+  output_root: artifacts/phase6e-a-inference
+  lock_path: artifacts/phase6e-a-inference/campaign_lock.json
+  proposal_group: phase6e-a-paired-proposals
+  baseline:
+    num_samples: 4
+    sample_batch_size: 4
+    reverse_steps: 25
+    repair_max_moves: 10
+    fallback_max_search_nodes: 100000
+  grids:
+    postprocessing: [raw_only, repair, hybrid]
+    reverse_steps: [10, 25, 50, 100]
+    proposal_count: [1, 2, 4, 8, 16]
+    repair_max_moves: [0, 5, 10, 20]

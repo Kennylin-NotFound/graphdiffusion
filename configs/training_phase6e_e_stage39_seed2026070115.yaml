@@ -1,0 +1,47 @@
+experiment:
+  name: phase6e-e-stage39-ten-seed-extension
+  purpose: masked_diffusion_seed_extension
+  seed: 2026070115
+  dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  train_partition: train
+  checkpoint_partition: checkpoint_selection
+  target_mode: best
+
+model:
+  kind: masked_conditional
+  num_mask_steps: 8
+  mask_schedule_power: 1.0
+  hidden_dim: 128
+  num_layers: 4
+  dropout: 0.0
+
+direct_control:
+  hidden_dim: 128
+  num_layers: 4
+  dropout: 0.0
+
+optimization:
+  batch_size: 16
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  gradient_clip_norm: 1.0
+  max_steps: 20000
+  validation_interval: 500
+  checkpoint_interval: 500
+
+checkpoint_selection:
+  metric_order: [pre_fallback_success, pre_fallback_gap, raw_any_feasibility, online_time]
+  instance_limit: 64
+  deterministic_samples: 1
+  stochastic_samples: 8
+  sample_batch_size: 8
+  temperature: 1.0
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+
+output:
+  root: artifacts/phase6e-e-stage39-10seed-training
+  run_pattern: "{model_kind}-seed2026070115"
+  latest_checkpoint: latest.pt
+  best_checkpoint: best.pt
+  metrics: metrics.jsonl

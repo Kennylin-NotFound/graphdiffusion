@@ -1,0 +1,19 @@
+stage3_contract:
+  schema_version: "1.0"
+  status: development_locked_final_not_generated
+  development_dataset_config: configs/dataset_phase6e_e_stage3_development.yaml
+  training_config: configs/training_phase6e_e_stage3_pilot.yaml
+  development_dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  forbidden_prior_partitions:
+    - artifacts/datasets/phase6c-final-main/test_id
+    - artifacts/datasets/phase6c-final-main/test_unseen_size
+    - artifacts/datasets/phase6c-final-main/test_sparse_topology
+    - artifacts/datasets/phase6c-final-main/test_low_compatibility
+    - artifacts/datasets/phase6c-final-main/test_high_sharing
+    - artifacts/datasets/phase6c-final-main/test_unseen_workflow
+  future_final_contract:
+    base_seed: 2026070201
+    output: artifacts/datasets/phase6e-e-stage3-final
+    status: preregistered_not_generated
+    minimum_training_seeds: 3
+    open_only_after_pilot_gates: true

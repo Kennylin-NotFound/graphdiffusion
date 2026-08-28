@@ -1,0 +1,62 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6e-a-reverse_steps-seed20260626
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - test_id
+  seed: 20260626
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-a-inference/reverse_steps
+  methods:
+  - method_id: steps_10
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T080255Z-phase6c-final-seed20260626/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 10
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: steps_25
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T080255Z-phase6c-final-seed20260626/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: steps_50
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T080255Z-phase6c-final-seed20260626/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 50
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: steps_100
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T080255Z-phase6c-final-seed20260626/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 100
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: phase6e_a_reverse_steps
+    question: How does reverse_steps affect verified inference?
+    hypothesis: The fixed variants expose a quality, feasibility, and runtime tradeoff.
+    comparison:
+    - steps_10
+    - steps_25
+    - steps_50
+    - steps_100
+    primary_metric: gap_to_pool_best

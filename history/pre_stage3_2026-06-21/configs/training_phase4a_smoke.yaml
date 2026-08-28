@@ -1,0 +1,25 @@
+training:
+  dataset_root: artifacts/datasets/phase1b-smoke
+  train_partitions: [train]
+  validation_partitions: [validation]
+  seed: 20260612
+  device: cuda
+  batch_size: 4
+  steps: 300
+  validation_interval: 25
+  learning_rate: 0.002
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  target_sampling: energy
+  capacity_weight: 0.1
+  link_weight: 0.1
+
+diffusion:
+  steps: 100
+  beta_start: 0.0001
+  beta_end: 0.2
+
+model:
+  hidden_dim: 128
+  layers: 4
+  dropout: 0.0

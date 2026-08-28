@@ -1,0 +1,73 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6e-a-proposal_count-seed20260624
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - test_id
+  seed: 20260624
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-a-inference/proposal_count
+  methods:
+  - method_id: proposals_1
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 1
+      sample_batch_size: 1
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: proposals_2
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 2
+      sample_batch_size: 2
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: proposals_4
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: proposals_8
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 8
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: proposals_16
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 16
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: phase6e_a_proposal_count
+    question: How does proposal_count affect verified inference?
+    hypothesis: The fixed variants expose a quality, feasibility, and runtime tradeoff.
+    comparison:
+    - proposals_1
+    - proposals_2
+    - proposals_4
+    - proposals_8
+    - proposals_16
+    primary_metric: gap_to_pool_best

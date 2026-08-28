@@ -1,0 +1,38 @@
+training:
+  run_name: phase6e-b-smoke-uniform_full-seed20260622
+  dataset_root: artifacts/datasets/phase6c-final-main
+  require_dataset_freeze: true
+  train_partitions:
+  - train
+  validation_partitions:
+  - validation
+  seed: 20260622
+  device: cuda
+  batch_size: 32
+  steps: 20
+  log_interval: 1
+  denoising_validation_interval: 20
+  constrained_validation_interval: 20
+  checkpoint_interval: 20
+  learning_rate: 0.001
+  weight_decay: 1.0e-05
+  gradient_clip_norm: 1.0
+  target_sampling: uniform
+  capacity_weight: 0.1
+  link_weight: 0.1
+  phase6eb_variant: uniform_full
+diffusion:
+  steps: 100
+  beta_start: 0.0001
+  beta_end: 0.2
+model:
+  hidden_dim: 128
+  layers: 4
+  dropout: 0.0
+constrained_validation:
+  num_samples: 4
+  sample_batch_size: 4
+  reverse_steps: 25
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  instance_limit: 4

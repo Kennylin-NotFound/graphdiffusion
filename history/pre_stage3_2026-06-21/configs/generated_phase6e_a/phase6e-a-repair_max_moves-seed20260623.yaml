@@ -1,0 +1,62 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6e-a-repair_max_moves-seed20260623
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - test_id
+  seed: 20260623
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-a-inference/repair_max_moves
+  methods:
+  - method_id: repair_moves_0
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T072547Z-phase6c-final-seed20260623/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 0
+      fallback_max_search_nodes: 100000
+  - method_id: repair_moves_5
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T072547Z-phase6c-final-seed20260623/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 5
+      fallback_max_search_nodes: 100000
+  - method_id: repair_moves_10
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T072547Z-phase6c-final-seed20260623/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: repair_moves_20
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T072547Z-phase6c-final-seed20260623/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 20
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: phase6e_a_repair_max_moves
+    question: How does repair_max_moves affect verified inference?
+    hypothesis: The fixed variants expose a quality, feasibility, and runtime tradeoff.
+    comparison:
+    - repair_moves_0
+    - repair_moves_5
+    - repair_moves_10
+    - repair_moves_20
+    primary_metric: gap_to_pool_best

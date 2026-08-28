@@ -1,0 +1,6 @@
+﻿[2026-07-16 17:46:25] Waiting for main/cross-scale evaluation PIDs: 25072, 5556.
+[2026-07-16 17:47:40] Waiting for main/cross-scale evaluation PIDs: 25072, 5556.
+[2026-07-16 19:14:43] Main/cross-scale process exited; finalizing its evidence.
+[2026-07-16 19:14:49] Starting controlled-shift evaluation.
+[2026-07-17 02:14:42] Controlled-shift evaluation completed; finalizing evidence.
+[2026-07-17 02:15:02] Starting realistic-simulation evaluation.

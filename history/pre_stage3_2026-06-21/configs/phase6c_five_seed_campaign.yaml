@@ -1,0 +1,9 @@
+campaign:
+  name: phase6c-five-seed-final
+  base_training_config: configs/training_phase6c_final.yaml
+  dataset_root: artifacts/datasets/phase6c-final-main
+  expected_steps: 1500
+  seeds: [20260622, 20260623, 20260624, 20260625, 20260626]
+  output_root: artifacts/phase6c-five-seed
+  existing_runs:
+    20260622: artifacts/runs/20260615T070248Z-phase6c-final-acceptance

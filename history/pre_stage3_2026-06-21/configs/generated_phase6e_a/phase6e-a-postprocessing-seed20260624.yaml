@@ -1,0 +1,51 @@
+experiment:
+  schema_version: '1.0'
+  name: phase6e-a-postprocessing-seed20260624
+  dataset_root: artifacts/datasets/phase6c-final-main
+  dataset_freeze: dataset_freeze.json
+  partitions:
+  - test_id
+  seed: 20260624
+  device: cuda
+  deterministic: true
+  output_root: artifacts/phase6e-a-inference/postprocessing
+  methods:
+  - method_id: post_raw_only
+    kind: learned_raw_only
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: post_repair
+    kind: learned_repair
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  - method_id: post_hybrid
+    kind: learned_hybrid
+    checkpoint: artifacts/runs/20260615T074031Z-phase6c-final-seed20260624/best_checkpoint.pt
+    proposal_group: phase6e-a-paired-proposals
+    inference:
+      num_samples: 4
+      sample_batch_size: 4
+      reverse_steps: 25
+      repair_max_moves: 10
+      fallback_max_search_nodes: 100000
+  claims:
+  - claim_id: phase6e_a_postprocessing
+    question: How does postprocessing affect verified inference?
+    hypothesis: The fixed variants expose a quality, feasibility, and runtime tradeoff.
+    comparison:
+    - post_raw_only
+    - post_repair
+    - post_hybrid
+    primary_metric: gap_to_pool_best

@@ -1,0 +1,7 @@
+instance:
+  id: phase0-toy
+  output: artifacts/datasets/phase0-toy.npz
+
+runtime:
+  seed: 7
+  deterministic: true

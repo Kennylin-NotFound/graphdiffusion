@@ -1,0 +1,39 @@
+{
+  "development_instance_count": 384,
+  "file_sha256": {
+    "PHASE6E_E_STAGE3_PLAN.md": "e39c931032a55d045c3576bcf1a01da285564201c72181c936589a8350cfa9bc",
+    "configs/dataset_phase6e_e_stage3_development.yaml": "d716d3f8d04a12fc0f4f4356cfb74afef3bee9230e348fc3108f67eeffd2d8ab",
+    "configs/phase6e_e_stage3_contract.yaml": "a83ae5d20ed159b142c83196100bca3aad9c75c65ee4677a5a0d69ae8691fd1c",
+    "configs/training_phase6e_e_stage3_pilot.yaml": "3a2445607b1cf6b3cc9e4d4aa5e8f3be8ffa5c3f152a4d1181da60a889907acb"
+  },
+  "final_data_exists": false,
+  "phase": "6E-E Stage 3 pre-training",
+  "prior_frozen_sha256": {
+    "final_evidence_freeze.json": "da62b8eef0a0de0839a5f83fffb5bca8b72c22a9076ace8d190b223c4f6683d0",
+    "stage2b_lock.json": "f3610439df653028c2c5d03045e7afd4efcbe4f8ec5d952537b67eafc8e134a7"
+  },
+  "protocol": {
+    "development_dataset_config": "configs/dataset_phase6e_e_stage3_development.yaml",
+    "development_dataset_root": "artifacts/datasets/phase6e-e-stage3-development",
+    "forbidden_prior_partitions": [
+      "artifacts/datasets/phase6c-final-main/test_id",
+      "artifacts/datasets/phase6c-final-main/test_unseen_size",
+      "artifacts/datasets/phase6c-final-main/test_sparse_topology",
+      "artifacts/datasets/phase6c-final-main/test_low_compatibility",
+      "artifacts/datasets/phase6c-final-main/test_high_sharing",
+      "artifacts/datasets/phase6c-final-main/test_unseen_workflow"
+    ],
+    "future_final_contract": {
+      "base_seed": 2026070201,
+      "minimum_training_seeds": 3,
+      "open_only_after_pilot_gates": true,
+      "output": "artifacts/datasets/phase6e-e-stage3-final",
+      "status": "preregistered_not_generated"
+    },
+    "schema_version": "1.0",
+    "status": "development_locked_final_not_generated",
+    "training_config": "configs/training_phase6e_e_stage3_pilot.yaml"
+  },
+  "schema_version": "1.0",
+  "training_seed": 2026070111
+}

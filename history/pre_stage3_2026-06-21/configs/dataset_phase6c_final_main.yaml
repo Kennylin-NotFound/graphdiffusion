@@ -1,0 +1,153 @@
+dataset:
+  name: phase6c-final-main
+  base_seed: 20260620
+  output: artifacts/datasets/phase6c-final-main
+
+  contract:
+    family: final_main
+    expected_instance_count: 1024
+    labeling:
+      target_size: 16
+      beta: 5.0
+      total_time_limit_seconds: 120.0
+      mip_gap: 0.0
+      threads: 1
+      seed: 0
+    base_partition: train
+    controlled_shifts:
+      validation: []
+      test_id: []
+      test_unseen_size: [service_count_range, num_applications, num_devices]
+      test_sparse_topology: [topology_density]
+      test_low_compatibility: [compatibility_density, minimum_candidates]
+      test_high_sharing: [share_probability]
+      test_unseen_workflow: [application_type_pool]
+
+  partitions:
+    train:
+      role: train
+      regime: in_distribution
+      size_profile: final_seen_medium
+      count: 512
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    validation:
+      role: validation
+      regime: in_distribution
+      size_profile: final_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_id:
+      role: test
+      regime: in_distribution
+      size_profile: final_seen_medium
+      count: 128
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_unseen_size:
+      role: test
+      regime: unseen_size
+      size_profile: final_seen_medium_upper
+      count: 64
+      service_count_range: [19, 24]
+      max_generation_attempts: 500
+      num_applications: [5, 7]
+      num_devices: [8, 10]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_sparse_topology:
+      role: test
+      regime: sparse_topology
+      size_profile: final_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.08, 0.20]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_low_compatibility:
+      role: test
+      regime: low_compatibility
+      size_profile: final_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.08, 0.25]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 1
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_high_sharing:
+      role: test
+      regime: high_sharing
+      size_profile: final_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.85, 1.00]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    test_unseen_workflow:
+      role: test
+      regime: unseen_workflow
+      size_profile: final_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [5]

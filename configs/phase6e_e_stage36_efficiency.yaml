@@ -1,0 +1,44 @@
+evaluation:
+  schema_version: "1.0"
+  name: phase6e-e-stage36-efficiency
+  seed: 2026070311
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  calibration_partition: checkpoint_selection
+  masked_checkpoint: artifacts/phase6e-e-stage3-training/masked_conditional-seed2026070111/best.pt
+  training_freeze: artifacts/phase6e-e-stage3-training/training_freeze.json
+  consumed_pilot_evidence: artifacts/phase6e-e-stage3-pilot/pilot_evidence.json
+  forbidden_final_root: artifacts/datasets/phase6e-e-stage3-final
+
+calibration:
+  deterministic_samples: 1
+  stochastic_proposal_grid: [2, 4, 8]
+  sample_batch_size: 8
+  temperature: 1.0
+
+postprocessing:
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  always_include_fallback: true
+
+selection_gate:
+  minimum_relative_gap_improvement: 0.05
+  require_more_paired_wins_than_losses: true
+  require_raw_feasibility_not_reduced: true
+  require_final_success_not_reduced: true
+  maximum_time_ratio_to_deterministic: 1.10
+  policy: smallest_passing_proposal_count
+
+confirmation:
+  dataset_config: configs/dataset_phase6e_e_stage36_confirmation.yaml
+  dataset_root: artifacts/datasets/phase6e-e-stage36-confirmation
+  partition: efficiency_confirmation
+  expected_instance_count: 128
+  status: preregistered_not_generated
+
+output:
+  preparation_lock: artifacts/phase6e-e-stage36/efficiency_preparation_lock.json
+  calibration_root: artifacts/phase6e-e-stage36-calibration
+  selection_lock: artifacts/phase6e-e-stage36/efficiency_selection_lock.json
+

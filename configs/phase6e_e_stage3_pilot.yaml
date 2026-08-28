@@ -1,0 +1,51 @@
+evaluation:
+  schema_version: "1.0"
+  name: phase6e-e-stage3-pilot
+  seed: 2026070111
+  device: cuda
+  deterministic: true
+  dataset_root: artifacts/datasets/phase6e-e-stage3-development
+  checkpoint_partition: checkpoint_selection
+  pilot_partition: pilot_gate
+  training_freeze: artifacts/phase6e-e-stage3-training/training_freeze.json
+  direct_checkpoint: artifacts/phase6e-e-stage3-training/direct-seed2026070111/best.pt
+  masked_checkpoint: artifacts/phase6e-e-stage3-training/masked_conditional-seed2026070111/best.pt
+
+calibration:
+  direct_proposal_grid: [1, 2, 4, 8, 16, 32, 64, 96]
+  direct_sample_batch_size: 8
+  deterministic_masked_samples: 1
+  stochastic_masked_samples: 8
+  masked_sample_batch_size: 8
+  temperature: 1.0
+
+postprocessing:
+  repair_max_moves: 10
+  fallback_max_search_nodes: 100000
+  always_include_fallback: true
+
+historical_anchors:
+  checkpoint_freeze: artifacts/phase6c-five-seed/checkpoint_freeze.json
+  seed: 20260622
+  diffusion_samples: 4
+  diffusion_sample_batch_size: 4
+  diffusion_reverse_steps: 25
+  rescue_anchor_indices: [0, 6, 12, 18, 24]
+  rescue_repair_candidate_limit: 12
+
+gates:
+  partial_conditioning:
+    minimum_relative_gap_improvement: 0.10
+    minimum_raw_any_percentage_point_improvement: 5.0
+    maximum_time_ratio_to_direct: 1.50
+  diffusion_specific:
+    minimum_relative_gap_improvement: 0.05
+    require_more_paired_wins_than_losses: true
+    maximum_time_ratio_to_deterministic: 1.10
+
+output:
+  calibration_root: artifacts/phase6e-e-stage3-calibration
+  pilot_root: artifacts/phase6e-e-stage3-pilot
+  preparation_lock: artifacts/phase6e-e-stage3/pilot_preparation_lock.json
+  pilot_contract_lock: artifacts/phase6e-e-stage3/pilot_contract_lock.json
+

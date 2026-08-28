@@ -1,0 +1,68 @@
+dataset:
+  name: phase6e-e-stage3-development
+  base_seed: 2026070101
+  output: artifacts/datasets/phase6e-e-stage3-development
+
+  contract:
+    family: stage3_development
+    expected_instance_count: 384
+    partition_counts:
+      train: 256
+      checkpoint_selection: 64
+      pilot_gate: 64
+    labeling:
+      target_size: 16
+      beta: 5.0
+      total_time_limit_seconds: 120.0
+      mip_gap: 0.0
+      threads: 1
+      seed: 0
+
+  partitions:
+    train:
+      role: train
+      regime: in_distribution
+      size_profile: stage3_seen_medium
+      count: 256
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    checkpoint_selection:
+      role: validation
+      regime: in_distribution
+      size_profile: stage3_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
+
+    pilot_gate:
+      role: test
+      regime: in_distribution
+      size_profile: stage3_seen_medium
+      count: 64
+      service_count_range: [8, 18]
+      max_generation_attempts: 300
+      num_applications: [2, 5]
+      num_devices: [5, 9]
+      share_probability: [0.30, 0.70]
+      compatibility_density: [0.35, 0.75]
+      topology_density: [0.25, 0.65]
+      capacity_slack: [0.10, 0.40]
+      minimum_candidates: 2
+      application_type_pool: [0, 1, 2, 3, 4]
